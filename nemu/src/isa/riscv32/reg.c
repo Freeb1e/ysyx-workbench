@@ -24,6 +24,17 @@ const char *regs[] = {
 };
 
 void isa_reg_display() {
+#ifdef CONFIG_RV64
+  for (int i = 0; i < 64; i++) {
+    printf("%s\t0x%016llx\t%lld\n", regs[i], cpu.gpr[i], cpu.gpr[i]);
+  }
+  printf("pc\t0x%016llx\n", cpu.pc);
+#else
+  for (int i = 0; i < 32; i++) {
+    printf("%s\t0x%08x\t%d\n", regs[i], cpu.gpr[i], cpu.gpr[i]);
+  }
+  printf("pc\t0x%08x\n", cpu.pc);
+#endif
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
