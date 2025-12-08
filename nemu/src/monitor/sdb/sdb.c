@@ -75,8 +75,8 @@ static int cmd_info(char *args)
 {
   if (args == NULL)
   {
-    printf("Please specify 'r' for registers or 'w' for watchpoints\n");
-    return 0;
+    //printf("Please specify 'r' for registers or 'w' for watchpoints\n");
+    printf("pc\t0x%08x\n", cpu.pc);
   }
   if (strcmp(args, "r") == 0)
   {
