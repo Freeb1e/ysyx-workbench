@@ -114,6 +114,12 @@ static int cmd_x(char *args)
   }
   return 0;
 }
+void sdb_set_batch_mode();
+static int cmd_b(char *args)
+{
+  sdb_set_batch_mode();
+  return 0;
+}
 static struct
 {
   const char *name;
@@ -129,6 +135,7 @@ static struct
     {"p", "Evaluate expression", NULL},
     {"w", "Set a watchpoint", NULL},
     {"d", "Delete a watchpoint", NULL},
+    {"b","enable batch mode",cmd_b}
 
     /* TODO: Add more commands */
 
