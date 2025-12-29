@@ -94,6 +94,13 @@ static int cmd_info(char *args)
   return 0;
 }
 
+static int cmd_ring(char *args)
+{
+    extern void ringbuf_print();
+    ringbuf_print();
+    return 0;
+}
+
 static int cmd_x(char *args)
 {
   if (args == NULL)
@@ -135,8 +142,8 @@ static struct
     {"p", "Evaluate expression", NULL},
     {"w", "Set a watchpoint", NULL},
     {"d", "Delete a watchpoint", NULL},
-    {"b","enable batch mode",cmd_b}
-
+    {"b","enable batch mode",cmd_b},
+    {"ring", "Print the instruction ring buffer", cmd_ring}
     /* TODO: Add more commands */
 
 };
@@ -174,6 +181,7 @@ static int cmd_help(char *args)
 
 void sdb_set_batch_mode()
 {
+  return;
   is_batch_mode = true;
 }
 

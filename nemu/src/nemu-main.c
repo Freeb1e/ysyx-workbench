@@ -29,6 +29,10 @@ int main(int argc, char *argv[]) {
 #endif
 
   /* Start engine. */
+  #ifdef CONFIG_ITRACE
+  extern void ringbuf_init();
+  ringbuf_init();
+  #endif
   engine_start();
 
   return is_exit_status_bad();
