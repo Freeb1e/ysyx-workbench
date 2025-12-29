@@ -17,7 +17,7 @@
 #include <memory/paddr.h>
 #include <device/mmio.h>
 #include <isa.h>
-
+#include "../cpu/myconfig.h"
 #if   defined(CONFIG_PMEM_MALLOC)
 static uint8_t *pmem = NULL;
 #else // CONFIG_PMEM_GARRAY
@@ -29,11 +29,17 @@ paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
 static word_t pmem_read(paddr_t addr, int len) {
   word_t ret = host_read(guest_to_host(addr), len);
+  #ifdef CONFIG_MEMTRACE
+  printf("PMEM READ: addr = " FMT_PADDR ", len = %d, data = " FMT_WORD "\n", addr, len, ret);
+  #endif
   return ret;
 }
 
 static void pmem_write(paddr_t addr, int len, word_t data) {
   host_write(guest_to_host(addr), len, data);
+  #ifdef CONFIG_MEMTRACE
+  printf("PMEM WRITE: addr = " FMT_PADDR ", len = %d, data = " FMT_WORD "\n", addr, len, data);
+  #endif
 }
 
 static void out_of_bound(paddr_t addr) {
