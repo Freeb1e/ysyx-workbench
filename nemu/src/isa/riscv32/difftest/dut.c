@@ -16,9 +16,20 @@
 #include <isa.h>
 #include <cpu/difftest.h>
 #include "../local-include/reg.h"
-
+extern void ringbuf_print();
+extern const char *regs[];
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
-  return false;
+    if(cpu.pc == ref_r->pc) {
+    for(int i = 0; i < MUXDEF(CONFIG_RVE, 16, 32); i++) {
+      if (gpr(i) != ref_r->gpr[i]) {
+         //ANSI_FMT("ON", ANSI_FG_GREEN)
+        printf(ANSI_FMT("reg %s is different, dut: 0x%08x, ref: 0x%08x\n", ANSI_FG_RED), regs[i], gpr(i), ref_r->gpr[i]);
+        ringbuf_print();
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 void isa_difftest_attach() {

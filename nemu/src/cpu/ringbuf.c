@@ -18,11 +18,13 @@ void ringbuf_append(const char *entry) {
 }
 
 void ringbuf_print() {
-    int idx = head_ptr % BUF_NUM;
+    int idx;
     for (int i = 0; i < BUF_NUM; i++) {
-        if(idx==0)printf("---- Instruction Ring Buffer ----\n");
-        printf("%d %s\n", idx,itrace_buf[idx]);
-        idx = (idx + 1) % BUF_NUM;
+        idx = (head_ptr + i) % BUF_NUM;
+        if(idx%BUF_NUM==(head_ptr-1+BUF_NUM)% BUF_NUM)
+            printf("\033[1;31m-->%d %s\033[0m\n", idx,itrace_buf[idx]);
+        else
+            printf("%d %s\n", idx,itrace_buf[idx]);
     }
     return;
 }
