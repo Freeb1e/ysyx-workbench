@@ -27,5 +27,5 @@ image: image-dep
 
 run: insert-arg
 	echo "TODO: add command here to run simulation"
-
+	$(NPC_HOME)/obj_dir/Vnpc $(IMAGE).bin
 .PHONY: insert-arg
