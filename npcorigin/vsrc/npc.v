@@ -63,17 +63,19 @@ module npc(
            );
 
     export "DPI-C" function get_pc_inst;
-    function void get_pc_inst(output int cpu_pc, output int cpu_inst);
-        cpu_pc = PC_reg;
-        cpu_inst = instr; 
-    endfunction
+               function void get_pc_inst();
+                   output int cpu_pc;
+                   output int cpu_inst;
+                   cpu_pc = PC_reg;
+                   cpu_inst = instr;
+               endfunction
 
-    import "DPI-C" function void ebreak();
-                always @ (posedge clk) begin
-                    if(stop_sim) begin
-                        ebreak();
-                    end
-    end
+               import "DPI-C" function void ebreak();
+                          always @ (posedge clk) begin
+                              if(stop_sim) begin
+                                  ebreak();
+                              end
+                          end
 
 
 endmodule
